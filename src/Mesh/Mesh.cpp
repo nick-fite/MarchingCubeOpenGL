@@ -118,7 +118,7 @@ Mesh::Mesh(std::string filePath, int meshNum)
 
                 float dist = closestTriangleDistance(glm::vec3(posX, posY, posZ));
 
-                Voxels.push_back(-dist);
+                Voxels.push_back(dist);
 
                 //initSdf_TestData.push_back(MeshData(glm::vec3(posX, posY, posZ), glm::vec2(0,0), glm::vec3(0,0,0)));
                 //Voxels.push_back(posX);
@@ -367,15 +367,6 @@ void Mesh::March(int X, int Y, int Z, const float Cube[8])
 	for (int i = 0; i < 5; ++i)
 	{
 		if (TriangleConnectionTable[VertexMask][3*i] < 0) break;
-		//glm::vec3 V1  = EdgeVertex[TriangleConnectionTable[VertexMask][3*i]] * voxelSize;
-		//glm::vec3 V2  = EdgeVertex[TriangleConnectionTable[VertexMask][3*i + 1]] * voxelSize;
-		//glm::vec3 V3  = EdgeVertex[TriangleConnectionTable[VertexMask][3*i + 2]] * voxelSize;
-
-        //glm::vec3 worldPos = glm::vec3(
-        //    minX + (EdgeVertex[TriangleConnectionTable[VertexMask][3*i]].x / SizeX) * vertSizeX,
-        //    minY + (EdgeVertex[TriangleConnectionTable[VertexMask][3*i + 1]].y / SizeY) * vertSizeY, 
-        //    minZ + (EdgeVertex[TriangleConnectionTable[VertexMask][3*i + 2]].z / SizeZ) * vertSizeZ
-        //);
 
         glm::vec3 V1 = glm::vec3(
             minX + (EdgeVertex[TriangleConnectionTable[VertexMask][3*i]].x / SizeX) * vertSizeX,
