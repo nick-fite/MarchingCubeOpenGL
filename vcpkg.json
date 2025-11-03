@@ -1,0 +1,10 @@
+{
+  "dependencies": [
+    "assimp",
+    "freetype",
+    "glew",
+    "glfw3",
+    "glm",
+    "freeimage"
+  ]
+}
