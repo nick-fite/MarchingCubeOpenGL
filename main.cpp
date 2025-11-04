@@ -1,14 +1,14 @@
 #include <gl/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <vector>
+#include <iostream>
 #include "src/Mesh/Mesh.h"
 #include "src/Transform/Transform3D.h"
 #include "src/Shaders/Shader.h"
 #include "src/Shaders/ShadersProgram/ShadersProgram.h"
 #include "src/Controllers/FPSController.h"
 #include "src/Material/Material.h"
-#include <vector>
-#include <iostream>
     
 using namespace std;
 
@@ -24,7 +24,24 @@ void resizeCallback(GLFWwindow* window, int width, int height) {
 void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
     MousePos = glm::vec2(xpos, ypos);
 }
+GLFWwindow *create_window(glm::ivec2 screen_size) {
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+  auto window = glfwCreateWindow(screen_size.x, screen_size.y,
+                                 "Mesh Distance Field", NULL, NULL);
+  glfwMakeContextCurrent(window);
+
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
+  glEnable(GL_FRAMEBUFFER_SRGB);
+  glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+
+  return window;
+}
+
+/* old main for reference */
 int main() {
     glfwInit();
 
@@ -38,7 +55,7 @@ int main() {
     glewInit();
     
     Mesh* mesh1 = new Mesh("../../assets/TestAssets/testPlayer.fbx", 0);
-    Mesh* mesh2 = new Mesh("../../assets/TestAssets/testPlayer.fbx", 1);
+    //Mesh* mesh2 = new Mesh("../../assets/TestAssets/testPlayer.fbx", 1);
     
     Transform3D transform;
     transform.SetPosition(glm::vec3(0,0,0));
@@ -47,6 +64,7 @@ int main() {
 
     Shader* vertShader = new Shader("../../assets/Shaders/Vertex.glsl", GL_VERTEX_SHADER);
     Shader* fragShader = new Shader("../../assets/Shaders/Fragment.glsl", GL_FRAGMENT_SHADER);
+    Shader* computeShader = new Shader("../../assets/Shaders/Compute.glsl", GL_COMPUTE_SHADER);
     
     char cameraViewVS[] = "cameraView";
     char worldMatrixVS[] = "worldMatrix";
@@ -55,6 +73,7 @@ int main() {
     char textureFile[] = "../../assets/TestAssets/Textures/Solid_Blue.png";
 
     ShaderProgram* shaderProgram = new ShaderProgram();
+    shaderProgram->AttachShader(computeShader);
     shaderProgram->AttachShader(vertShader);
     shaderProgram->AttachShader(fragShader);
 
@@ -74,7 +93,7 @@ int main() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
-        glClearColor(0.0,0.0,0.0, 0.0);
+        glClearColor(0.7f,0.7f,0.7f, 1.0);
 
         mat->SetMatrix(cameraViewVS, viewProjection);
         mat->SetMatrix(worldMatrixVS, transform.GetMatrix());
@@ -82,7 +101,7 @@ int main() {
         mat->Bind();
 
         mesh1->DrawMesh();
-        mesh2->DrawMesh();
+        //mesh2->DrawMesh();
         
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -93,7 +112,7 @@ int main() {
     delete vertShader;
     delete fragShader;
     delete mesh1;
-    delete mesh2;
+    //delete mesh2;
     glfwTerminate();
 
     return 1;

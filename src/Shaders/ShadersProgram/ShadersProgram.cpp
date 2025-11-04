@@ -30,6 +30,10 @@ void ShaderProgram::AttachShader(Shader* shader)
         case GL_FRAGMENT_SHADER:
             currentShader = &m_fragShader;
             break;
+
+        case GL_COMPUTE_SHADER:
+            currentShader = &m_ComputeShader;
+            break;
         default: return;
     }
     shader->IncRefCount();

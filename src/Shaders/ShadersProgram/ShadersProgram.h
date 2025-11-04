@@ -7,6 +7,7 @@ class ShaderProgram
 private:
     Shader* m_vertShader = nullptr;
     Shader* m_fragShader = nullptr;
+    Shader* m_ComputeShader = nullptr;
 
     GLuint m_shaderProgram;
 

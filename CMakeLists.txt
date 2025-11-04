@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(ShopliftingBoy)
+project(MarchingCubeOpenGL)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 if(MSVC)
   add_compile_options(/EHsc /MP)
 else()
@@ -23,6 +23,7 @@ find_package(freeimage REQUIRED)
 find_package(OpenGL REQUIRED)
 
 set(SRC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+# set(OLD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/oldSrc")
 
 file(GLOB_RECURSE SRC_FILES 
     "${SRC}/*.cpp"
@@ -31,9 +32,9 @@ file(GLOB_RECURSE SRC_FILES
     "${SRC}/*.c"
 )
 
-add_executable(ShopliftingBoy main.cpp ${SRC_FILES})
+add_executable(MarchingCubeOpenGL main.cpp ${SRC_FILES})
 
-target_link_libraries(ShopliftingBoy PRIVATE
+target_link_libraries(MarchingCubeOpenGL PRIVATE
     glfw
     GLEW::GLEW
     Freetype::Freetype
