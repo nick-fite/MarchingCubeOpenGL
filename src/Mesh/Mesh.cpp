@@ -208,6 +208,11 @@ void Mesh::DrawMesh()
         glDisableVertexAttribArray(i);
     }
 
+    // Draw the bounding boxes of the cubes
+    glColor3f(1.0f, 0.0f, 0.0f); // Set color to red for debugging
+    for (const auto& cube : debugCubes) {
+        DrawWireframeCube(cube.first, cube.second);
+    }
     innerBB.Draw();
     outerBB.Draw();
 
@@ -357,6 +362,20 @@ void Mesh::March(int X, int Y, int Z, const float Cube[8])
 				VertexMask |= (1 << i);
 	}
 	const int EdgeMask = CubeEdgeFlags[VertexMask];
+    glm::vec3 minCorner = glm::vec3(
+        minX + (float(X) / SizeX) * vertSizeX,
+        minY + (float(Y) / SizeY) * vertSizeY,
+        minZ + (float(Z) / SizeZ) * vertSizeZ
+    );
+    glm::vec3 maxCorner = glm::vec3(
+        minX + (float(X + 1) / SizeX) * vertSizeX,
+        minY + (float(Y + 1) / SizeY) * vertSizeY,
+        minZ + (float(Z + 1) / SizeZ) * vertSizeZ
+    );
+
+
+
+    debugCubes.push_back(std::make_pair(minCorner, maxCorner));
 
 	if (EdgeMask == 0 ) return;
 	
@@ -622,4 +641,30 @@ glm::vec3 Mesh::computeBarycentricCoordinates(const glm::vec3& p, const glm::vec
     return glm::vec3(u, v, w);
 
 
+}
+
+void Mesh::DrawWireframeCube(glm::vec3 minCorner, glm::vec3 maxCorner) {
+    glm::vec3 corners[8] = {
+        minCorner,
+        glm::vec3(maxCorner.x, minCorner.y, minCorner.z),
+        glm::vec3(maxCorner.x, maxCorner.y, minCorner.z),
+        glm::vec3(minCorner.x, maxCorner.y, minCorner.z),
+        glm::vec3(minCorner.x, minCorner.y, maxCorner.z),
+        glm::vec3(maxCorner.x, minCorner.y, maxCorner.z),
+        maxCorner,
+        glm::vec3(minCorner.x, maxCorner.y, maxCorner.z)
+    };
+
+    unsigned int edges[24] = {
+        0, 1, 1, 2, 2, 3, 3, 0,
+        4, 5, 5, 6, 6, 7, 7, 4,
+        0, 4, 1, 5, 2, 6, 3, 7
+    };
+
+    glBegin(GL_LINES);
+    for (int i = 0; i < 24; i += 2) {
+        glVertex3fv(&corners[edges[i]].x);
+        glVertex3fv(&corners[edges[i + 1]].x);
+    }
+    glEnd();
 }

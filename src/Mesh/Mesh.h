@@ -37,6 +37,7 @@ public:
     float voxelSizeX;
     float voxelSizeY;
     float voxelSizeZ;
+    std::vector<std::pair<glm::vec3, glm::vec3>> debugCubes; // Stores min and max corners of each cube
 private:
     float vertSizeX, vertSizeY, vertSizeZ;
     void MakeMesh(std::vector<MeshData> vertices, std::vector<unsigned short> indices);
@@ -89,6 +90,9 @@ private:
     std::vector<glm::vec3> Normals;
     std::vector<glm::vec2> UVs;
     int vertexCount = 0;
+
+
+    void DrawWireframeCube(glm::vec3 minCorner, glm::vec3 maxCorner);
 public:
     void DrawMesh();
 
