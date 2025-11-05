@@ -21,6 +21,7 @@ find_package(assimp REQUIRED)
 find_package(glm REQUIRED)
 find_package(freeimage REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(OpenMP REQUIRED)
 
 set(SRC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 # set(OLD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/oldSrc")
@@ -43,4 +44,5 @@ target_link_libraries(MarchingCubeOpenGL PRIVATE
     freeimage::FreeImage
     freeimage::FreeImagePlus
     OpenGL::GL
+    OpenMP::OpenMP_CXX
 )

@@ -3,9 +3,9 @@
 
 
 class BoundingBox {
-    glm::vec3 min, max, center;
-
+    
 public:
+    glm::vec3 min, max, center;
     BoundingBox(const glm::vec3& min, const glm::vec3& max);
     BoundingBox ApplyScale(Transform3D t);
     glm::vec3 GetCenter();

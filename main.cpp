@@ -53,7 +53,7 @@ int main() {
     
     glewInit();
     
-    Mesh* mesh1 = new Mesh("../../assets/TestAssets/testPlayer.fbx", 0);
+    Mesh* mesh1 = new Mesh("../../assets/TestAssets/cube.obj", 0);
     //Mesh* mesh2 = new Mesh("../../assets/TestAssets/testPlayer.fbx", 1);
     
     Transform3D transform;
@@ -63,7 +63,7 @@ int main() {
 
     Shader* vertShader = new Shader("../../assets/Shaders/Vertex.glsl", GL_VERTEX_SHADER);
     Shader* fragShader = new Shader("../../assets/Shaders/Fragment.glsl", GL_FRAGMENT_SHADER);
-    Shader* computeShader = new Shader("../../assets/Shaders/Compute.glsl", GL_COMPUTE_SHADER);
+    //Shader* computeShader = new Shader("../../assets/Shaders/Compute.glsl", GL_COMPUTE_SHADER);
     
     char cameraViewVS[] = "cameraView";
     char worldMatrixVS[] = "worldMatrix";
