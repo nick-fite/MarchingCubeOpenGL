@@ -30,7 +30,8 @@ public:
     
 	std::vector<MeshData> m_vertices;
     std::vector<unsigned short> m_indices;
-	BoundingBox box = BoundingBox(glm::vec3(0), glm::vec3(0));
+	BoundingBox innerBB = BoundingBox(glm::vec3(0), glm::vec3(0));
+	BoundingBox outerBB = BoundingBox(glm::vec3(0), glm::vec3(0));
 
 private:
     void MakeMesh(std::vector<MeshData> vertices, std::vector<unsigned short> indices);

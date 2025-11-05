@@ -5,9 +5,9 @@ BoundingBox::BoundingBox(const glm::vec3& newMin, const glm::vec3& newMax): min(
 {
    this->center = 
     glm::vec3(
-        min.x + (max.x - min.x),
-        min.y + (max.y - min.y),
-        min.z + (max.z - min.z)
+        min.x + (max.x - min.x) /2,
+        min.y + (max.y - min.y) /2,
+        min.z + (max.z - min.z) /2
     ); 
 }
 

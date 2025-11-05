@@ -38,7 +38,11 @@ Mesh::Mesh(std::string filePath, int meshNum)
     // Convert aiVector3D to glm::vec3
     glm::vec3 minBounds(mesh->mAABB.mMin.x, mesh->mAABB.mMin.y, mesh->mAABB.mMin.z);
     glm::vec3 maxBounds(mesh->mAABB.mMax.x, mesh->mAABB.mMax.y, mesh->mAABB.mMax.z);
-    box = BoundingBox(minBounds, maxBounds);
+    innerBB = BoundingBox(minBounds, maxBounds);
+    //outerBB = BoundingBox(minBounds, maxBounds);
+    Transform3D t3d;
+    t3d.SetScale(1.1f);
+    outerBB = innerBB.ApplyScale(t3d);
 
     std::vector<float> positionsX;
     std::vector<float> positionsY;
@@ -140,6 +144,7 @@ void Mesh::DrawMesh()
         glDisableVertexAttribArray(i);
     }
 
-    box.Draw();
+    innerBB.Draw();
+    outerBB.Draw();
 
 }

@@ -41,7 +41,6 @@ GLFWwindow *create_window(glm::ivec2 screen_size) {
   return window;
 }
 
-/* old main for reference */
 int main() {
     glfwInit();
 
@@ -73,7 +72,7 @@ int main() {
     char textureFile[] = "../../assets/TestAssets/Textures/Solid_Blue.png";
 
     ShaderProgram* shaderProgram = new ShaderProgram();
-    shaderProgram->AttachShader(computeShader);
+    //shaderProgram->AttachShader(computeShader);
     shaderProgram->AttachShader(vertShader);
     shaderProgram->AttachShader(fragShader);
 
